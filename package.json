@@ -2,7 +2,6 @@
   "name": "personal-expense-tracker",
   "version": "1.0.0",
   "description": "personal expense tracker api",
-  "type": "module",
   "main": "src/app.ts",
   "directories": {
     "test": "tests"
