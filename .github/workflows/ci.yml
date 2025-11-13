@@ -1,0 +1,46 @@
+name: CI - Expense Tracker API (TypeScript)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 4️⃣ Lint check (optional but recommended)
+      - name: Run ESLint
+        run: npm run lint || echo "Linting issues found (non-blocking)"
+
+      # 5️⃣ TypeScript compile check
+      - name: Build project
+        run: npm run build
+
+      # 6️⃣ Run tests with Jest
+      - name: Run tests
+        run: npm test
+        env:
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MONGO_USER: ${{ secrets.MONGO_USER }}
+          MONGO_APP_NAME: ${{ secrets.MONGO_APP_NAME }}
+          MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+          PORT: ${{ secrets.PORT }}
