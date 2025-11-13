@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
-import { connectDB } from '../config/db';
-import User from '../models/user';
+import { connectDB } from '../config/db.js';
+import User from '../models/user.js';
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   const { firstName, lastName, email, password } = req.body ?? {};
